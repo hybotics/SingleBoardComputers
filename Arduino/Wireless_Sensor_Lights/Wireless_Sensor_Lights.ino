@@ -17,6 +17,7 @@
 #include <Adafruit_LEDBackpack.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_DHT_Sensor.h>
+#include <Adafruit_NeoPixel.h>
 
 #include "Wireless_Sensor_Lights.h"
 
@@ -53,7 +54,7 @@ void displayReadings (float humidity, float fahrenheit, float celsius) {
     console.print(fahrenheit);
     console.print(" F, ");
     console.print(celsius);
-    console.println(" C.")
+    console.println(" C.");
 }
 
 /*
@@ -80,7 +81,7 @@ void sendNybble (byte data) {
 	byte bit = 0;
 
 	//	Set the transmit bits - we only look at the lower four bits
-	for (bit = 0, bit < 4; bit++) {
+	for (bit = 0; bit < 4; bit++) {
 		digitalWrite(TRANSMITTER_PIN_BASE + bit, (data & (bit ^ 2)));
 	}
 
@@ -126,8 +127,8 @@ void loop (void) {
 
 	//	Reading temperature or humidity takes about 250 milliseconds!
 	//	Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-	humidity = dht.readHumidity();
-	celsius = dht.readTemperature();
+	humidity = dht22.readHumidity();
+	celsius = dht22.readTemperature();
 	fahrenheit = toFahrenheit(celsius);
 
 	//	Check if returns are valid. If they are NaN (not a number) then something went wrong!
