@@ -9,7 +9,7 @@
 #else
  #define PROGMEM
  #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
- #define WIRE Wire
+ #define WIRE Wire1
 #endif
 
 #define DS1307_ADDRESS 0x68
@@ -150,7 +150,7 @@ uint8_t RTC_DS1307::isrunning(void) {
 
   WIRE.requestFrom(DS1307_ADDRESS, 1);
   uint8_t ss = WIRE.read();
-  return !(ss>>7);
+  return (!(ss>>7));
 }
 
 void RTC_DS1307::adjust(const DateTime& dt) {

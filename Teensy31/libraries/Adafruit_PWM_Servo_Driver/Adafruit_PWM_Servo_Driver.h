@@ -15,8 +15,8 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#ifndef _ADAFRUIT_PWM_SERVO_DRIVER_H
-#define _ADAFRUIT_PWM_SERVO_DRIVER_H
+#ifndef _ADAFRUIT_PWMServoDriver_H
+#define _ADAFRUIT_PWMServoDriver_H
 
 #if ARDUINO >= 100
  #include "Arduino.h"
@@ -43,9 +43,9 @@
 #define ALLLED_OFF_H 0xFD
 
 
-class Adafruit_PWM_Servo_Driver {
+class Adafruit_PWMServoDriver {
  public:
-  Adafruit_PWM_Servo_Driver(uint8_t addr = 0x40);
+  Adafruit_PWMServoDriver(uint8_t addr = 0x40);
   void begin(void);
   void reset(void);
   void setPWMFreq(float freq);

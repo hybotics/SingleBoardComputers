@@ -23,23 +23,24 @@
  #define WIRE Wire1
 #endif
 
-Adafruit_PWM_Servo_Driver::Adafruit_PWM_Servo_Driver(uint8_t addr) {
+Adafruit_PWMServoDriver::Adafruit_PWMServoDriver(uint8_t addr) {
   _i2caddr = addr;
 }
 
-void Adafruit_PWM_Servo_Driver::begin(void) {
+void Adafruit_PWMServoDriver::begin(void) {
  WIRE.begin();
  reset();
 }
 
-void Adafruit_PWM_Servo_Driver::reset(void) {
+
+void Adafruit_PWMServoDriver::reset(void) {
  write8(PCA9685_MODE1, 0x0);
 }
 
-void Adafruit_PWM_Servo_Driver::setPWMFreq(float freq) {
+void Adafruit_PWMServoDriver::setPWMFreq(float freq) {
   //Serial.print("Attempting to set freq ");
   //Serial.println(freq);
-
+  
   float prescaleval = 25000000;
   prescaleval /= 4096;
   prescaleval /= freq;
@@ -59,11 +60,11 @@ void Adafruit_PWM_Servo_Driver::setPWMFreq(float freq) {
   //  Serial.print("Mode now 0x"); Serial.println(read8(PCA9685_MODE1), HEX);
 }
 
-void Adafruit_PWM_Servo_Driver::setPWM(uint8_t num, uint16_t on, uint16_t off) {
+void Adafruit_PWMServoDriver::setPWM(uint8_t num, uint16_t on, uint16_t off) {
   //Serial.print("Setting PWM "); Serial.print(num); Serial.print(": "); Serial.print(on); Serial.print("->"); Serial.println(off);
 
   WIRE.beginTransmission(_i2caddr);
-  WIRE.write(LED0_ON_L + 4 * num);
+  WIRE.write(LED0_ON_L+4*num);
   WIRE.write(on);
   WIRE.write(on>>8);
   WIRE.write(off);
@@ -71,7 +72,7 @@ void Adafruit_PWM_Servo_Driver::setPWM(uint8_t num, uint16_t on, uint16_t off) {
   WIRE.endTransmission();
 }
 
-uint8_t Adafruit_PWM_Servo_Driver::read8(uint8_t addr) {
+uint8_t Adafruit_PWMServoDriver::read8(uint8_t addr) {
   WIRE.beginTransmission(_i2caddr);
   WIRE.write(addr);
   WIRE.endTransmission();
@@ -80,7 +81,7 @@ uint8_t Adafruit_PWM_Servo_Driver::read8(uint8_t addr) {
   return WIRE.read();
 }
 
-void Adafruit_PWM_Servo_Driver::write8(uint8_t addr, uint8_t d) {
+void Adafruit_PWMServoDriver::write8(uint8_t addr, uint8_t d) {
   WIRE.beginTransmission(_i2caddr);
   WIRE.write(addr);
   WIRE.write(d);
